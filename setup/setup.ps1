@@ -15,10 +15,10 @@ Function Get-Folder($initialDirectory)
 }
 
 $title = "Physical or Virtual"
-$message = "Are you using your physical machine for the workshop, or you you want to use a Virtual Image?"
+$message = "Are you using your physical machine for the workshop, or do you want to use a Virtual Image?"
 
 $physical = New-Object System.Management.Automation.Host.ChoiceDescription "&Physical", `
-    "You are going to use your own machine, and have necessary for the Workshop"
+    "You are going to use your own machine, and have everything necessary for the Workshop"
 
 $virtual = New-Object System.Management.Automation.Host.ChoiceDescription "&Virtual", `
     "You want to use a Virtual Machine for the workshop"
@@ -39,7 +39,7 @@ switch ($result)
         $message = "Do you have Vagrant installed?"
 
         $yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", `
-            "You already have Vagrant installed, and no further again will be taken."
+            "You already have Vagrant installed, and no further action will be taken."
 
         $no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", `
             "You don't have Vagrant installed, and an attempt will be made to install it."
@@ -101,7 +101,7 @@ $targetFolder = Get-Folder
 
 # Only copy files if a folder is chosen
 if($targetFolder) {
-    Copy-Item -Path "chocolatey-workshop/*" -Destination $targetFolder.FullName -Recurse -Verbose -ErrorAction $ErrorActionPreference
+    Copy-Item -Path "chocolatey-workshop/*" -Destination $targetFolder -Recurse -Verbose -ErrorAction $ErrorActionPreference
 } else {
     Write-Host "You have chosen to not copy files."
 }
