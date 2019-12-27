@@ -16,8 +16,15 @@ Vagrant.configure('2') do |config|
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     # No audo
     v.customize ["modifyvm", :id, "--audio", "none"]
+	process = `"#{ENV["VBOX_MSI_INSTALL_PATH"]}vboxmanage.exe" -v`
+	
     # Clipboard enabled
-    v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+    if process[0,5] >= '6.1.0' then
+		# Clipboard enabled
+		v.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+	else
+		v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+	end
     v.customize ["modifyvm", :id, "--draganddrop", "hosttoguest"]
     # For performance
     v.customize ["modifyvm", :id, "--usb", "off"]
